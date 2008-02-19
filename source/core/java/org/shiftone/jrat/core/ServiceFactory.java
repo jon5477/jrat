@@ -118,7 +118,7 @@ public class ServiceFactory {
 
         if (webActionRegistry == null) {
             webActionRegistry = new WebActionRegistry();
-
+            getShutdownRegistry().registerShutdownListener(webActionRegistry);
             //getJmxRegistry().registerMBean(webActionRegistry, null);
         }
 

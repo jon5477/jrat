@@ -32,7 +32,7 @@ public class TreeWebActionFactory implements WebActionFactory {
     }
 
     public TreeNode getNode(int index) {
-        return (TreeNode) treeNodes.get(index);
+        return (treeNodes.size() > index ? (TreeNode) treeNodes.get(index) : null);
     }
 
     public class Action implements WebAction {
@@ -87,8 +87,13 @@ public class TreeWebActionFactory implements WebActionFactory {
 
             out.print("<html></body>");
             out.println("<ul>");
-            printTreeParents(treeNode, out);
-            printTreeChildren(treeNode, out);
+            if (treeNode != null)
+            {
+                printTreeParents(treeNode, out);
+                printTreeChildren(treeNode, out);
+            } else {
+                out.println("No Tree Nodes");
+            }
             out.println("</ul>");
             out.print("</body></html>");
 

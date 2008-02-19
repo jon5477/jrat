@@ -108,6 +108,7 @@ public class Response {
 
         public void write(char cbuf[], int off, int len) throws IOException {
             commit();
+//            LOG.info("writing: " + cbuf);
             writer.write(cbuf, off, len);
         }
 
@@ -128,16 +129,19 @@ public class Response {
 
         public void write(char cbuf[]) throws IOException {
             commit();
+//            LOG.info("writing: " + cbuf);
             super.write(cbuf);
         }
 
         public void write(String str) throws IOException {
             commit();
+//            LOG.info("writing: " + str);
             super.write(str);
         }
 
         public void write(String str, int off, int len) throws IOException {
             commit();
+//            LOG.info("writing: " + str);
             super.write(str, off, len);
         }
     }

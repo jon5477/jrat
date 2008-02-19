@@ -8,6 +8,7 @@
 
     <settings>
         <property name="httpServerEnabled" value="true"/>
+        <property name="httpPort" value="9009"/>
     </settings>
 
     <!--

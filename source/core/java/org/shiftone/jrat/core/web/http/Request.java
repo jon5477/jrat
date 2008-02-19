@@ -18,7 +18,6 @@ import java.util.*;
 public class Request {
 
     private static final Logger LOG = Logger.getLogger(Request.class);
-    private static final boolean DEBUG = false;
     private String method;
     private String requestUri;
     private String httpVersion;
@@ -27,20 +26,12 @@ public class Request {
 
     private Map headers = new HashMap();
 
-    public Request(InputStream inputStream) throws Exception {
+    public Request() {
+    }
 
-        if (DEBUG) {
-            LOG.info("debugging request...");
-            byte[] data = IOUtil.readAndClose(inputStream);
-            File file = new File("http-" + System.currentTimeMillis() + ".txt");
-            FileOutputStream dump = new FileOutputStream(file);
-            IOUtil.copy(new ByteArrayInputStream(data), dump);
-            dump.flush();
-            dump.close();
-            LOG.info("wrote " + file.getAbsolutePath());
-            inputStream = new ByteArrayInputStream(data);
-        }
-
+    // returns expect more input
+    // todo: handle in a more loopy fashion
+    public boolean readInput(InputStream inputStream) throws IOException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line = reader.readLine();
@@ -56,6 +47,7 @@ public class Request {
             posted = reader.readLine();
         }
 
+        return false;
     }
 
 
@@ -75,6 +67,7 @@ public class Request {
             queryString = requestUri.substring(q + 1); // get just the query string
             requestUri = requestUri.substring(0, q);   // remove the query string and ?
         }
+//        LOG.info("Got Request: " + requestUri + " ? " + queryString);
     }
 
     public Parameters getParameters() {
@@ -88,6 +81,7 @@ public class Request {
         String key = line.substring(0, a);
         String value = line.substring(a + 2);  // remove ": "        
         headers.put(key, value);
+//        LOG.info("Got Header: " + key + " = " + value);
     }
 
     public String getMethod() {
